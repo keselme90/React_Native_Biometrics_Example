@@ -19,7 +19,7 @@ const App = () => {
 
   const _storeData = async data => {
     try {
-      await AsyncStorage.setItem('@Signature:key', data);
+      await AsyncStorage.setItem('@Public:key', data);
     } catch (error) {
       // Error saving data
     }
@@ -38,6 +38,7 @@ const App = () => {
               'Confirm fingerprint',
             );
             console.log(generatedKeys);
+            _storeData(generatedKeys.publicKey);
           } else {
             const signature = await ReactNativeBiometrics.createSignature({
               promptMessage: 'Sign in',
@@ -45,7 +46,6 @@ const App = () => {
             });
             console.log(signature);
             setSig(signature.signature);
-            _storeData(signature.signature);
             if (signature.success) {
               // TODO: something goes here
             }
