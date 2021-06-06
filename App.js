@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import ReactNativeBiometrics from 'react-native-biometrics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 let epochTimeSeconds = Math.round(new Date().getTime() / 1000).toString();
@@ -15,8 +15,7 @@ let payload = epochTimeSeconds + 'some message';
 import {SafeAreaView, StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 const App = () => {
-
-  const [sig,setSig] = useState('')
+  const [sig, setSig] = useState('');
 
   const _storeData = async data => {
     try {
@@ -45,30 +44,17 @@ const App = () => {
               payload: payload,
             });
             console.log(signature);
-            setSig(signature.signature)
+            setSig(signature.signature);
             _storeData(signature.signature);
             if (signature.success) {
-              // const promptResult = await ReactNativeBiometrics.simplePrompt({
-              //   promptMessage: 'Confirm fingerprint',
-              // });
-              // console.log(promptResult);
+              // TODO: something goes here
             }
           }
-          //do something face id specific
         }
       } catch (e) {
         console.log('something failed, error = ', e);
       }
 
-      // ReactNativeBiometrics.biometricKeysExist().then(resultObject => {
-      //   const {keysExist} = resultObject;
-
-      //   if (keysExist) {
-      //     console.log('Keys exist');
-      //   } else {
-      //     console.log('Keys do not exist or were deleted');
-      //   }
-      // });
     };
 
     isSensorAvailable();
